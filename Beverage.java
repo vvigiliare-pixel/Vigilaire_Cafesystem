@@ -1,0 +1,88 @@
+/**
+ * Represents a drink sold at the campus cafe.
+ * The price depends on the selected size.
+ *
+ * @author Vigilaire George C. Viajar Jr.
+ * @version 1.0
+ */
+public class Beverage extends MenuItem {
+    /** Medium size surcharge in pesos. */
+    private static final double MEDIUM_FEE = 15;
+    /** Large size surcharge in pesos. */
+    private static final double LARGE_FEE = 25;
+
+    /** Size of the drink: "S", "M", or "L". */
+    private String size;
+
+    /**
+     * Default constructor. Uses the parent defaults and size "S".
+     */
+    public Beverage() {
+        super();
+        this.size = "S";
+    }
+
+    /**
+     * Parameterized constructor.
+     *
+     * @param name      the drink name
+     * @param basePrice the base price in pesos
+     * @param itemCode  the item code
+     * @param size      the size: S, M, or L
+     */
+    public Beverage(String name, double basePrice, String itemCode, String size) {
+        super(name, basePrice, itemCode);
+        this.size = "S";
+        setSize(size); // validate the size
+    }
+
+    /**
+     * Computes the final price based on size.
+     *
+     * @return the price of this beverage in pesos
+     */
+    @Override
+    public double computePrice() {
+        // Large adds 25, Medium adds 15, Small uses the base price
+        if (size.equals("L")) {
+            return basePrice + LARGE_FEE;
+        } else if (size.equals("M")) {
+            return basePrice + MEDIUM_FEE;
+        } else {
+            return basePrice;
+        }
+    }
+
+    /**
+     * Describes the drink including its size.
+     *
+     * @return the description text
+     */
+    @Override
+    public String getDescription() {
+        return super.getDescription() + " Size: " + size;
+    }
+
+    /**
+     * Gets the size.
+     *
+     * @return S, M, or L
+     */
+    public String getSize() {
+        return size;
+    }
+
+    /**
+     * Sets the size. Only S, M, or L are accepted; otherwise the old value stays.
+     *
+     * @param size the new size
+     */
+    public void setSize(String size) {
+        // Accept only the three valid sizes
+        if (size != null && (size.equals("S") || size.equals("M") || size.equals("L"))) {
+            this.size = size;
+        } else {
+            System.out.println("Error: size must be S, M, or L. Keeping " + this.size + ".");
+        }
+    }
+}
